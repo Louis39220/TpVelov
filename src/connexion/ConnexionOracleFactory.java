@@ -22,22 +22,18 @@ public class ConnexionOracleFactory {
 
     public static Connection getInstance() throws IOException, SQLException {
         if (connectionOracle == null) {
-            try {
-                Properties props = new Properties();
-                FileInputStream fichier = new FileInputStream("connexionOracle.properties");
-                props.load(fichier);
-                OracleDataSource ods = new OracleDataSource();
-                ods.setDriverType(props.getProperty("pilote"));
-                ods.setPortNumber(new Integer(props
-                        .getProperty("port")).intValue());
-                ods.setServiceName(props.getProperty("service"));
-                ods.setUser(props.getProperty("user"));
-                ods.setPassword(props.getProperty("pwd"));
-                ods.setServerName(props.getProperty("serveur"));
-                return (ods.getConnection());
-            } catch (IOException | SQLException e) {
-                System.err.println("Erreur lors de la connection : " + e.getMessage());
-            }
+            Properties props = new Properties();
+            FileInputStream fichier = new FileInputStream("src/connexion/connexionOracle.properties");
+            props.load(fichier);
+            OracleDataSource ods = new OracleDataSource();
+            ods.setDriverType(props.getProperty("pilote"));
+            ods.setPortNumber(new Integer(props
+                    .getProperty("port")).intValue());
+            ods.setServiceName(props.getProperty("service"));
+            ods.setUser(props.getProperty("user"));
+            ods.setPassword(props.getProperty("pwd"));
+            ods.setServerName(props.getProperty("serveur"));
+            return (ods.getConnection());
         }
         return connectionOracle;
     }

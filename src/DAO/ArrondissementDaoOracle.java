@@ -32,7 +32,7 @@ public class ArrondissementDaoOracle extends Dao<Arrondissement> {
         connexionDB = ConnexionOracleFactory.getInstance();
         ResultSet rs;
         Statement st = connexionDB.createStatement();
-        rs = st.executeQuery("SELECT * FROM java.arrondissementVille");
+        rs = st.executeQuery("SELECT * FROM arrondissementVille");
 
         HashMap<String, Arrondissement> hc = new HashMap<>();
         while(rs.next()){
@@ -48,7 +48,7 @@ public class ArrondissementDaoOracle extends Dao<Arrondissement> {
         connexionDB = ConnexionOracleFactory.getInstance();
         ResultSet rs;
         Arrondissement a;
-        try (PreparedStatement PS = connexionDB.prepareStatement("SELECT * FROM java.arrondissementVille WHERE numeroArrondissementVille= ?")) {
+        try (PreparedStatement PS = connexionDB.prepareStatement("SELECT * FROM arrondissementVille WHERE numeroArrondissementVille= ?")) {
             PS.setInt(1, id);
             rs = PS.executeQuery();
             rs.next();
@@ -63,9 +63,9 @@ public class ArrondissementDaoOracle extends Dao<Arrondissement> {
     public boolean insert(Arrondissement a)throws SQLException,IOException{
                 boolean res = true;
         connexionDB = ConnexionOracleFactory.getInstance();
-        try (PreparedStatement PS = connexionDB.prepareStatement("INSERT INTO java.arrondissementVille(numeroArrondissementVille,nomArrondissementVille) values(?,?)")) {
-            PS.setInt(2, a.getIdArrondissement());
-            PS.setString(1, a.getNomArrondissement());
+        try (PreparedStatement PS = connexionDB.prepareStatement("INSERT INTO ARRONDISSEMENTVILLE(NUMEROARRONDISSEMENTVILLE,NOMARRONDISSEMENTVILLE) values(?,?)")) {
+            PS.setInt(1, a.getIdArrondissement());
+            PS.setString(2, a.getNomArrondissement());
             try {
                 PS.executeUpdate();
             } catch (SQLException e) {
@@ -83,7 +83,7 @@ public class ArrondissementDaoOracle extends Dao<Arrondissement> {
     public boolean delete(Arrondissement a)throws SQLException,IOException{
         boolean res = true;
         connexionDB = ConnexionOracleFactory.getInstance();
-        try (PreparedStatement ps = connexionDB.prepareStatement("DELETE FROM java.arrondissementVille where numeroArrondissementVille=?")) {
+        try (PreparedStatement ps = connexionDB.prepareStatement("DELETE FROM ARRONDISSEMENTVILLE where NUMEROARRONDISSEMENTVILLE=?")) {
             ps.setInt(1, a.getIdArrondissement());
             try {
                 ps.executeUpdate();
@@ -102,7 +102,7 @@ public class ArrondissementDaoOracle extends Dao<Arrondissement> {
     public boolean update(Arrondissement a)throws SQLException,IOException{
         boolean res = true;
         connexionDB = ConnexionOracleFactory.getInstance();
-        try (PreparedStatement ps = connexionDB.prepareStatement("UPDATE java.arrondissementVille SET nomArrondissementVille=? where numeroArrondissementVille=?")) {
+        try (PreparedStatement ps = connexionDB.prepareStatement("UPDATE arrondissementVille SET nomArrondissementVille=? where numeroArrondissementVille=?")) {
             ps.setString(1, a.getNomArrondissement());
             ps.setInt(2,a.getIdArrondissement());
             try {
