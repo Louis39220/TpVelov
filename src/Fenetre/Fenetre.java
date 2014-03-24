@@ -4,9 +4,18 @@
  */
 package Fenetre;
 
+import DAO.AbstractDaoFactory;
+import DAO.Dao;
 import entities.Station;
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -23,7 +32,12 @@ public class Fenetre extends javax.swing.JFrame {
         initComponents();
         lbLogo.setIcon(new ImageIcon("image.png"));
         imgAPropos.setIcon(new ImageIcon("imgAPropos.png"));
+        Toolkit tk = Toolkit.getDefaultToolkit();
+        Dimension d = tk.getScreenSize();
+        setLocation((d.width-this.getWidth()) / 2, (d.height-this.getHeight()) / 2);
+        
         fenAPropos.setSize(500, 190);
+        fenAPropos.setLocation((d.width-fenAPropos.getWidth()) / 2, (d.height-fenAPropos.getHeight()) / 2);
     }
 
     /**
@@ -44,7 +58,7 @@ public class Fenetre extends javax.swing.JFrame {
         btFermerAPropos = new javax.swing.JButton();
         lbLogo = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tabStation = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         lbNumStation = new javax.swing.JLabel();
         lbNomStation = new javax.swing.JLabel();
@@ -137,8 +151,8 @@ public class Fenetre extends javax.swing.JFrame {
             }
         });
 
-        jTable1.setModel(new ModeleTable(listeStation));
-        jScrollPane1.setViewportView(jTable1);
+        tabStation.setModel(new ModeleTable(listeStation));
+        jScrollPane1.setViewportView(tabStation);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
@@ -276,7 +290,15 @@ public class Fenetre extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void menuConnexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuConnexionActionPerformed
-        // TODO add your handling code here:
+        try {
+            remplirTable();
+        } catch (IOException ex) {
+            Logger.getLogger(Fenetre.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Fenetre.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(Fenetre.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_menuConnexionActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
@@ -312,7 +334,6 @@ public class Fenetre extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPopupMenu.Separator jSeparator1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel lbLocalisation;
     private javax.swing.JLabel lbLogo;
     private javax.swing.JLabel lbNomStation;
@@ -322,6 +343,7 @@ public class Fenetre extends javax.swing.JFrame {
     private javax.swing.JMenuItem menuAPropos;
     private javax.swing.JMenuItem menuConnexion;
     private javax.swing.JMenuItem menuQuitter;
+    private javax.swing.JTable tabStation;
     private javax.swing.JTextField txtLocalisation;
     private javax.swing.JTextField txtNomStation;
     private javax.swing.JTextField txtNumStation;
@@ -333,5 +355,14 @@ public class Fenetre extends javax.swing.JFrame {
         if (rep == JOptionPane.YES_OPTION) {
             System.exit(0);
         }
+    }
+    
+    private void remplirTable() throws IOException, SQLException, Exception {
+        AbstractDaoFactory abs = AbstractDaoFactory.getDaoFactory(AbstractDaoFactory.DAO_ORACLE);
+        Dao<Station> dao = (Dao<Station>) abs.getStationDao();
+        HashMap<String, Station> liste = dao.selectAll();
+        
+        Collection<Station> collec = liste.values();
+        for (Station s : collec) ((ModeleTable)tabStation.getModel()).ajoutStation(s);
     }
 }
