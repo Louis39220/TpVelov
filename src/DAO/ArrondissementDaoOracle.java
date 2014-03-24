@@ -32,7 +32,7 @@ public class ArrondissementDaoOracle extends Dao<Arrondissement> {
         connexionDB = ConnexionOracleFactory.getInstance();
         ResultSet rs;
         Statement st = connexionDB.createStatement();
-        rs = st.executeQuery("SELECT * FROM java.arrondissementVille");
+        rs = st.executeQuery("SELECT * FROM arrondissementVille");
 
         HashMap<String, Arrondissement> hc = new HashMap<>();
         while(rs.next()){

@@ -24,7 +24,7 @@ public class ConnexionOracleFactory {
         if (connectionOracle == null) {
             try {
                 Properties props = new Properties();
-                FileInputStream fichier = new FileInputStream("connexionOracle.properties");
+                FileInputStream fichier = new FileInputStream("src/connexion/connexionOracle.properties");
                 props.load(fichier);
                 OracleDataSource ods = new OracleDataSource();
                 ods.setDriverType(props.getProperty("pilote"));
