@@ -36,7 +36,7 @@ public class StationDaoOracle extends Dao<Station> {
         connexionDB = ConnexionOracleFactory.getInstance();
         ResultSet rs;
         Statement st = connexionDB.createStatement();
-        rs = st.executeQuery("SELECT * FROM java.station");
+        rs = st.executeQuery("SELECT * FROM station");
         HashMap<String,Station> hs = new HashMap<>();
         while(rs.next()){
             hs.put(rs.getString(1),new Station(rs.getString(1), rs.getString(2), rs.getString(3)));
@@ -51,7 +51,7 @@ public class StationDaoOracle extends Dao<Station> {
         connexionDB = ConnexionOracleFactory.getInstance();
         ResultSet rs;
         Station s;
-        try (PreparedStatement PS = connexionDB.prepareStatement("SELECT * FROM java.station WHERE numeroIdentification=?")) {
+        try (PreparedStatement PS = connexionDB.prepareStatement("SELECT * FROM station WHERE numeroIdentification=?")) {
             PS.setString(1, String.valueOf(id));
             rs = PS.executeQuery();
             rs.next();
@@ -66,7 +66,7 @@ public class StationDaoOracle extends Dao<Station> {
     public boolean insert(Station s)throws SQLException,IOException{
         boolean res = true;
         connexionDB = ConnexionOracleFactory.getInstance();
-        try (PreparedStatement PS = connexionDB.prepareStatement("INSERT INTO java.station(numeroIdentification,nomStation,localisationStation) values(?,?,?)")) {
+        try (PreparedStatement PS = connexionDB.prepareStatement("INSERT INTO station(numeroIdentification,nomStation,localisationStation) values(?,?,?)")) {
             PS.setString(1, s.getNumeroIdentification());
             PS.setString(2, s.getNomStation());
             PS.setString(3, s.getLocalisationStation());
@@ -87,7 +87,7 @@ public class StationDaoOracle extends Dao<Station> {
     public boolean delete(Station s)throws SQLException,IOException{
         boolean res = true;
         connexionDB = ConnexionOracleFactory.getInstance();
-        try (PreparedStatement ps = connexionDB.prepareStatement("DELETE FROM java.station where numeroIdentification=?")) {
+        try (PreparedStatement ps = connexionDB.prepareStatement("DELETE FROM station where numeroIdentification=?")) {
             ps.setString(1, s.getNumeroIdentification());
             try {
                 ps.executeUpdate();
@@ -106,7 +106,7 @@ public class StationDaoOracle extends Dao<Station> {
     public boolean update(Station s)throws SQLException,IOException{
         boolean res = true;
         connexionDB = ConnexionOracleFactory.getInstance();
-        try (PreparedStatement ps = connexionDB.prepareStatement("UPDATE java.station SET nomStation=? localisationStation=? where numeroIdentification=?")) {
+        try (PreparedStatement ps = connexionDB.prepareStatement("UPDATE station SET nomStation=? localisationStation=? where numeroIdentification=?")) {
             ps.setString(1, s.getNomStation());
             ps.setString(2, s.getLocalisationStation());
             ps.setString(3,s.getNumeroIdentification());
