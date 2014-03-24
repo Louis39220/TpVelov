@@ -12,13 +12,13 @@ package entities;
  */
 public class Station {
     private String numeroIdentification;
-    private String nomArrondissement;
+    private String nomStation;
     private String localisationStation;
     private Arrondissement arrondissement;
 
     public Station(String numeroIdentification, String nomArrondissement, String localisationStation) {
         this.numeroIdentification = numeroIdentification;
-        this.nomArrondissement = nomArrondissement;
+        this.nomStation = nomArrondissement;
         this.localisationStation = localisationStation;
     }
 
@@ -30,12 +30,12 @@ public class Station {
         this.numeroIdentification = numeroIdentification;
     }
 
-    public String getNomArrondissement() {
-        return nomArrondissement;
+    public String getNomStation() {
+        return nomStation;
     }
 
     public void setNomArrondissement(String nomArrondissement) {
-        this.nomArrondissement = nomArrondissement;
+        this.nomStation = nomArrondissement;
     }
 
     public String getLocalisationStation() {
@@ -56,7 +56,7 @@ public class Station {
 
     @Override
     public String toString() {
-        return "Station{" + "numeroIdentification=" + numeroIdentification + ", nomArrondissement=" + nomArrondissement + ", localisationStation=" + localisationStation + '}';
+        return "Station{" + "numeroIdentification=" + numeroIdentification + ", nomArrondissement=" + nomStation + ", localisationStation=" + localisationStation + '}';
     }
     
     

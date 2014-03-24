@@ -68,7 +68,7 @@ public class StationDaoOracle extends Dao<Station> {
         connexionDB = ConnexionOracleFactory.getInstance();
         try (PreparedStatement PS = connexionDB.prepareStatement("INSERT INTO java.station(numeroIdentification,nomStation,localisationStation) values(?,?,?)")) {
             PS.setString(1, s.getNumeroIdentification());
-            PS.setString(2, s.getNomArrondissement());
+            PS.setString(2, s.getNomStation());
             PS.setString(3, s.getLocalisationStation());
             try {
                 PS.executeUpdate();
@@ -107,7 +107,7 @@ public class StationDaoOracle extends Dao<Station> {
         boolean res = true;
         connexionDB = ConnexionOracleFactory.getInstance();
         try (PreparedStatement ps = connexionDB.prepareStatement("UPDATE java.station SET nomStation=? localisationStation=? where numeroIdentification=?")) {
-            ps.setString(1, s.getNomArrondissement());
+            ps.setString(1, s.getNomStation());
             ps.setString(2, s.getLocalisationStation());
             ps.setString(3,s.getNumeroIdentification());
             try {
