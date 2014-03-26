@@ -12,6 +12,9 @@ import entities.Arrondissement;
 import entities.Station;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Collection;
+import java.util.HashMap;
+
 
 /**
  *
@@ -27,7 +30,8 @@ public class test {
          Arrondissement a = new Arrondissement(3, "Lyon 6eme");
          Arrondissement a1 = new Arrondissement(4, "Lyon 7eme");
          //int id = 1;
-        
+
+
          try {
                
                System.out.println(stat.selectAll().toString());  
@@ -35,8 +39,6 @@ public class test {
          }catch(SQLException | IOException e) {
              System.err.println(e.getMessage());
          }
-         
-         
      }
     
 }
