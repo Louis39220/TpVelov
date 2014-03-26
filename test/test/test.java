@@ -14,6 +14,7 @@ import DAO.DaoFactoryMysql;
 import entities.Arrondissement;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.HashMap;
 
 /**
  *
@@ -23,14 +24,17 @@ public class test {
     
     
      public static void main(String[] args) throws SQLException, IOException, Exception {
-         AbstractDaoFactory s = AbstractDaoFactory.getDaoFactory(AbstractDaoFactory.DAO_ORACLE);
+         AbstractDaoFactory s = AbstractDaoFactory.getDaoFactory(AbstractDaoFactory.DAO_MYSQL);
          Dao<Arrondissement> d = (Dao<Arrondissement>) s.getArrondissementDao();
          Arrondissement a = new Arrondissement(10, "Lyon 6eme");
+         Arrondissement a1 = new Arrondissement(2, "Lyon 7eme");
          //int id = 1;
         
          try {
-             d.insert(a);
-             System.out.println(d.selectAll().toString());          
+                d.insert(a);
+                d.insert(a1);
+               System.out.println(d.selectAll().toString());  
+             
          }catch(SQLException | IOException e) {
              System.err.println(e.getMessage());
          }
