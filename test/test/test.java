@@ -7,17 +7,14 @@
 package test;
 
 import DAO.AbstractDaoFactory;
-import DAO.ArrondissementDaoMySQL;
-import DAO.ArrondissementDaoOracle;
 import DAO.Dao;
-import DAO.DaoFactoryMysql;
-import Fenetre.ModeleTable;
 import entities.Arrondissement;
 import entities.Station;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.HashMap;
+
 
 /**
  *
@@ -27,12 +24,21 @@ public class test {
     
     
      public static void main(String[] args) throws SQLException, IOException, Exception {
-        AbstractDaoFactory abs = AbstractDaoFactory.getDaoFactory(AbstractDaoFactory.DAO_ORACLE);
-        Dao<Station> dao = (Dao<Station>) abs.getStationDao();
-        HashMap<String, Station> liste = dao.selectAll();
-        
-        Collection<Station> collec = liste.values();
-        for (Station s : collec) System.out.println(s.toString());
+         AbstractDaoFactory s = AbstractDaoFactory.getDaoFactory(AbstractDaoFactory.DAO_ORACLE);
+         Dao<Arrondissement> d = (Dao<Arrondissement>) s.getArrondissementDao();
+         Dao<Station> stat = (Dao<Station>) s.getStationDao();
+         Arrondissement a = new Arrondissement(3, "Lyon 6eme");
+         Arrondissement a1 = new Arrondissement(4, "Lyon 7eme");
+         //int id = 1;
+
+
+         try {
+               
+               System.out.println(stat.selectAll().toString());  
+             
+         }catch(SQLException | IOException e) {
+             System.err.println(e.getMessage());
+         }
      }
     
 }
