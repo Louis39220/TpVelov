@@ -174,6 +174,11 @@ public class Fenetre extends javax.swing.JFrame {
         btCreer.setText("Créer");
 
         btSupp.setText("Supprimer");
+        btSupp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btSuppActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -317,6 +322,10 @@ public class Fenetre extends javax.swing.JFrame {
         fenAPropos.setVisible(false);
     }//GEN-LAST:event_btFermerAProposActionPerformed
 
+    private void btSuppActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSuppActionPerformed
+        suppLine();
+    }//GEN-LAST:event_btSuppActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btCreer;
     private javax.swing.JButton btFermerAPropos;
@@ -358,12 +367,15 @@ public class Fenetre extends javax.swing.JFrame {
     }
     
     private void remplirTable() throws IOException, SQLException, Exception {
-        System.out.println("Connection");
         AbstractDaoFactory abs = AbstractDaoFactory.getDaoFactory(AbstractDaoFactory.DAO_ORACLE);
         Dao<Station> dao = (Dao<Station>) abs.getStationDao();
         HashMap<String, Station> liste = dao.selectAll();
         
         Collection<Station> collec = liste.values();
         for (Station s : collec) ((ModeleTable)tabStation.getModel()).ajoutStation(s);
+    }
+    
+    private void suppLine() {
+        
     }
 }
