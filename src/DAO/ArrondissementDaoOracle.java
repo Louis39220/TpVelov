@@ -43,7 +43,8 @@ public class ArrondissementDaoOracle extends Dao<Arrondissement> {
         return hc;
     }
     
-        public Arrondissement select(int id)throws SQLException,IOException{
+    @Override
+    public Arrondissement select(int id)throws SQLException,IOException{
         connexionDB = ConnexionOracleFactory.getInstance();
         ResultSet rs;
         Arrondissement a;

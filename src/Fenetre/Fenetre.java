@@ -6,13 +6,17 @@ package Fenetre;
 
 import DAO.AbstractDaoFactory;
 import DAO.Dao;
+import entities.Arrondissement;
 import entities.Station;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,9 +30,12 @@ import javax.swing.JOptionPane;
 public class Fenetre extends javax.swing.JFrame {
     
     Map<String, Station> listeStation;
+    List<Arrondissement> listeArrond;
     
     public Fenetre() {
         this.listeStation = new HashMap<>();
+        this.listeArrond = new ArrayList<>();
+        initListe();
         initComponents();
         lbLogo.setIcon(new ImageIcon("image.png"));
         imgAPropos.setIcon(new ImageIcon("imgAPropos.png"));
@@ -162,11 +169,7 @@ public class Fenetre extends javax.swing.JFrame {
 
         lbNumArrondissement.setText("Numéro arrondissement");
 
-        listNumArrondissement.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
+        listNumArrondissement.setModel(new ModeleList(listeArrond));
         jScrollPane2.setViewportView(listNumArrondissement);
 
         lbLocalisation.setText("Localistion");
@@ -376,6 +379,35 @@ public class Fenetre extends javax.swing.JFrame {
     }
     
     private void suppLine() {
-        
+        try {
+            Station s = ((ModeleTable)tabStation.getModel()).suppressionStation(tabStation.getSelectedRow());
+            AbstractDaoFactory abs = AbstractDaoFactory.getDaoFactory(AbstractDaoFactory.DAO_ORACLE);
+            Dao<Station> dao = (Dao<Station>) abs.getStationDao();
+            dao.delete(s);
+        } catch (IOException ex) {
+            Logger.getLogger(Fenetre.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Fenetre.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(Fenetre.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private void initListe() {
+        try {
+            AbstractDaoFactory abs = AbstractDaoFactory.getDaoFactory(AbstractDaoFactory.DAO_ORACLE);
+            Dao<Arrondissement> dao = (Dao<Arrondissement>) abs.getArrondissementDao();
+            HashMap<String, Arrondissement> liste = dao.selectAll();
+            
+            Collection<Arrondissement> collec = liste.values();
+            for (Arrondissement a : collec) listeArrond.add(a);
+            Collections.sort(listeArrond);
+        } catch (IOException ex) {
+            Logger.getLogger(Fenetre.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Fenetre.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(Fenetre.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

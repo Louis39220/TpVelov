@@ -10,7 +10,7 @@ package entities;
  *
  * @author Louis
  */
-public class Arrondissement {
+public class Arrondissement implements Comparable {
     private int idArrondissement;
     private String nomArrondissement;
 
@@ -37,7 +37,15 @@ public class Arrondissement {
 
     @Override
     public String toString() {
-        return "Arrondissement{" + "idArrondissement=" + idArrondissement + ", nomArrondissement=" + nomArrondissement + '}';
+        return nomArrondissement;
+    }
+
+    @Override
+    public int compareTo(Object t) {
+        Arrondissement a = (Arrondissement) t;
+        if (idArrondissement < a.getIdArrondissement()) return -1;
+        else if (idArrondissement == a.getIdArrondissement()) return 0;
+        else return 1;
     }
     
 }

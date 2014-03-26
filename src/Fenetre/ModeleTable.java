@@ -1,10 +1,13 @@
 
 package Fenetre;
 
+import DAO.AbstractDaoFactory;
+import DAO.Dao;
 import entities.Station;
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import javax.swing.table.AbstractTableModel;
 
@@ -52,15 +55,17 @@ public class ModeleTable extends AbstractTableModel {
         fireTableDataChanged();
     }
     
-    public void suppressionEtudiant(int row) {
+    public Station suppressionStation(int row) throws IOException, SQLException, Exception {
         Collection<Station> c = listeStations.values();
         int i = 0;
-        String cle = null;
+        Station station = null;
         for (Station s : c) {
-            if (i == row) cle = s.getNumeroIdentification();
+            if (i == row) station = s;
             i++;
         }
-        listeStations.remove(cle);
+        if (station != null) listeStations.remove(station.getNumeroIdentification());
+        
         fireTableDataChanged();
+        return station;
     }
 }
