@@ -35,13 +35,19 @@ public class StationDaoOracle extends Dao<Station> {
     public HashMap<String,Station> selectAll()throws Exception{
         connexionDB = ConnexionOracleFactory.getInstance();
         ResultSet rs;
+        ResultSet rs1 = null;
         Statement st = connexionDB.createStatement();
-        rs = st.executeQuery("SELECT * FROM station");
+        rs = st.executeQuery("SELECT * FROM STATION");
         HashMap<String,Station> hs = new HashMap<>();
-        while(rs.next()){
-            hs.put(rs.getString(1),new Station(rs.getString(1), rs.getString(2), rs.getString(3)));
+        while(rs.next()) {
+            Statement st1 = connexionDB.createStatement();
+            rs1 = st1.executeQuery("SELECT * FROM ARRONDISSEMENTVILLE WHERE numeroarrondissementville = " + rs.getInt(4));
+            rs1.next();
+            System.out.println(rs.getString(1)+ rs.getString(2)+ rs.getString(3)+ rs1.getInt(1)+ rs1.getString(2));
+            hs.put(rs.getString(1),new Station(rs.getString(1), rs.getString(2), rs.getString(3), rs1.getInt(1), rs1.getString(2)));
         }
         rs.close();
+        if (rs1 != null) rs1.close();
         connexionDB.close();
         return hs;
     }
@@ -50,14 +56,19 @@ public class StationDaoOracle extends Dao<Station> {
     public Station select(int id)throws SQLException,IOException{
         connexionDB = ConnexionOracleFactory.getInstance();
         ResultSet rs;
+        ResultSet rs1 = null;
         Station s;
         try (PreparedStatement PS = connexionDB.prepareStatement("SELECT * FROM station WHERE numeroIdentification=?")) {
             PS.setString(1, String.valueOf(id));
             rs = PS.executeQuery();
             rs.next();
-            s = new Station(rs.getString(1),rs.getString(2),rs.getString(3));
+            Statement st1 = connexionDB.createStatement();
+            rs1 = st1.executeQuery("SELECT * FROM ARRONDISSEMENTVILLE WHERE numeroarrondissementville = " + rs.getInt(4));
+            rs1.next();
+            s = new Station(rs.getString(1),rs.getString(2),rs.getString(3), rs1.getInt(1), rs1.getString(2));
         }
         rs.close();
+        rs1.close();
         connexionDB.close();
         return s;
     }
@@ -66,10 +77,11 @@ public class StationDaoOracle extends Dao<Station> {
     public boolean insert(Station s)throws SQLException,IOException{
         boolean res = true;
         connexionDB = ConnexionOracleFactory.getInstance();
-        try (PreparedStatement PS = connexionDB.prepareStatement("INSERT INTO station(numeroIdentification,nomStation,localisationStation) values(?,?,?)")) {
+        try (PreparedStatement PS = connexionDB.prepareStatement("INSERT INTO station(numeroIdentification,nomStation,localisationStation, numeroarrondissement) values(?,?,?,?)")) {
             PS.setString(1, s.getNumeroIdentification());
             PS.setString(2, s.getNomStation());
             PS.setString(3, s.getLocalisationStation());
+            PS.setInt(4, s.getArrondissement().getIdArrondissement());
             try {
                 PS.executeUpdate();
             } catch (SQLException e) {

@@ -16,11 +16,18 @@ public class Station {
     private String localisationStation;
     private Arrondissement arrondissement;
 
-    public Station(String numeroIdentification, String nomArrondissement, String localisationStation) {
+    public Station(String numeroIdentification, String nomArrondissement, String localisationStation, int numarrond, String nomarrond) {
         this.numeroIdentification = numeroIdentification;
         this.nomStation = nomArrondissement;
         this.localisationStation = localisationStation;
+        this.arrondissement = new Arrondissement(numarrond, nomarrond);
     }
+
+    public Station(String numeroIdentification, String nomStation, String localisationStation) {
+        this.numeroIdentification = numeroIdentification;
+        this.nomStation = nomStation;
+        this.localisationStation = localisationStation;
+    }    
 
     public String getNumeroIdentification() {
         return numeroIdentification;

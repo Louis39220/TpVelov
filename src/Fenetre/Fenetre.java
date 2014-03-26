@@ -358,6 +358,7 @@ public class Fenetre extends javax.swing.JFrame {
     }
     
     private void remplirTable() throws IOException, SQLException, Exception {
+        System.out.println("Connection");
         AbstractDaoFactory abs = AbstractDaoFactory.getDaoFactory(AbstractDaoFactory.DAO_ORACLE);
         Dao<Station> dao = (Dao<Station>) abs.getStationDao();
         HashMap<String, Station> liste = dao.selectAll();

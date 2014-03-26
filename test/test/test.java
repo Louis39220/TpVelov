@@ -11,9 +11,13 @@ import DAO.ArrondissementDaoMySQL;
 import DAO.ArrondissementDaoOracle;
 import DAO.Dao;
 import DAO.DaoFactoryMysql;
+import Fenetre.ModeleTable;
 import entities.Arrondissement;
+import entities.Station;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Collection;
+import java.util.HashMap;
 
 /**
  *
@@ -23,19 +27,12 @@ public class test {
     
     
      public static void main(String[] args) throws SQLException, IOException, Exception {
-         AbstractDaoFactory s = AbstractDaoFactory.getDaoFactory(AbstractDaoFactory.DAO_ORACLE);
-         Dao<Arrondissement> d = (Dao<Arrondissement>) s.getArrondissementDao();
-         Arrondissement a = new Arrondissement(10, "Lyon 6eme");
-         //int id = 1;
+        AbstractDaoFactory abs = AbstractDaoFactory.getDaoFactory(AbstractDaoFactory.DAO_ORACLE);
+        Dao<Station> dao = (Dao<Station>) abs.getStationDao();
+        HashMap<String, Station> liste = dao.selectAll();
         
-         try {
-             d.insert(a);
-             System.out.println(d.selectAll().toString());          
-         }catch(SQLException | IOException e) {
-             System.err.println(e.getMessage());
-         }
-         
-         
+        Collection<Station> collec = liste.values();
+        for (Station s : collec) System.out.println(s.toString());
      }
     
 }
