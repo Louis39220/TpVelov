@@ -75,6 +75,7 @@ public class StationDaoMySQL extends Dao<Station> {
                 PS.cancel();
                 res = false;
             }
+            connexionDB.commit();
             PS.close();
             connexionDB.close();
         }
@@ -94,6 +95,7 @@ public class StationDaoMySQL extends Dao<Station> {
                 ps.cancel();
                 res = false;
             }
+            connexionDB.commit();
             ps.close();
             connexionDB.close();
         }
@@ -115,6 +117,7 @@ public class StationDaoMySQL extends Dao<Station> {
                 ps.cancel();
                 res = false;
             }
+            connexionDB.commit();
             ps.close();
             connexionDB.close();
         }

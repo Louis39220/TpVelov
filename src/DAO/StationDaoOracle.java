@@ -14,9 +14,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  *
@@ -41,6 +39,7 @@ public class StationDaoOracle extends Dao<Station> {
         while(rs.next()){
             hs.put(rs.getString(1),new Station(rs.getString(1), rs.getString(2), rs.getString(3)));
         }
+        connexionDB.commit();
         rs.close();
         connexionDB.close();
         return hs;
@@ -57,6 +56,7 @@ public class StationDaoOracle extends Dao<Station> {
             rs.next();
             s = new Station(rs.getString(1),rs.getString(2),rs.getString(3));
         }
+        connexionDB.commit();
         rs.close();
         connexionDB.close();
         return s;
@@ -77,6 +77,7 @@ public class StationDaoOracle extends Dao<Station> {
                 PS.cancel();
                 res = false;
             }
+            connexionDB.commit();
             PS.close();
             connexionDB.close();
         }
@@ -96,6 +97,7 @@ public class StationDaoOracle extends Dao<Station> {
                 ps.cancel();
                 res = false;
             }
+            connexionDB.commit();
             ps.close();
             connexionDB.close();
         }
@@ -117,6 +119,7 @@ public class StationDaoOracle extends Dao<Station> {
                 ps.cancel();
                 res = false;
             }
+            connexionDB.commit();
             ps.close();
             connexionDB.close();
         }

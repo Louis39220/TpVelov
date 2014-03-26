@@ -73,6 +73,7 @@ public class ArrondissementDaoOracle extends Dao<Arrondissement> {
                 PS.cancel();
                 res = false;
             }
+            connexionDB.commit();
             PS.close();
             connexionDB.close();
         }
@@ -92,6 +93,7 @@ public class ArrondissementDaoOracle extends Dao<Arrondissement> {
                 ps.cancel();
                 res = false;
             }
+            connexionDB.commit();
             ps.close();
             connexionDB.close();
         }
@@ -112,6 +114,7 @@ public class ArrondissementDaoOracle extends Dao<Arrondissement> {
                 ps.cancel();
                 res = false;
             }
+            connexionDB.commit();
             ps.close();
             connexionDB.close();
         }
